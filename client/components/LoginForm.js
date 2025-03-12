@@ -8,6 +8,7 @@ class LoginForm extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { errors: [] };
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -17,16 +18,15 @@ class LoginForm extends Component {
       refetchQueries: [{ query }]
     }).catch(res => {
       const errors = res.graphQLErrors.map(error => error.message);
-      console.log(errors)
+      this.setState({ errors });
     });
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <h3>Login</h3>
-        <AuthForm onSubmit={this.onSubmit} />
+        <AuthForm onSubmit={this.onSubmit} errors={this.state.errors} />
       </div>
     );
   }
